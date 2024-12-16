@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int        @id @default(autoincrement())
+  email            String?    @unique
+  name             String
+  phone            String     @unique
+  role             UserRoles  @default(User)
+  apartmentId      Int?
+  apartment        Apartment? @relation("owner-relation")
+  otp              String?
+  otpExpires       DateTime?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  admins           Society[]  @relation("admin-relation")
+  managedSocieties Society[]  @relation("manager-relation")
+  tenant           Apartment? @relation("tenant-relation")
+  member           Apartment? @relation("member-relation", fields: [memberid], references: [id])
+  memberid         Int?
+}
+
+model Society {
+  id         Int         @id @default(autoincrement())
+  name       String
+  address    String
+  city       String
+  state      String
+  zip        String
+  phone      String
+  email      String
+  website    String
+  apartments Apartment[]
+  admins     User[]      @relation("admin-relation")
+  managers   User[]      @relation("manager-relation")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Apartment {
+  id        Int      @id @default(autoincrement())
+  name      String
+  owner     User     @relation("owner-relation", fields: [userId], references: [id])
+  Guest     Guest[]
+  userId    Int      @unique
+  societyId Int
+  society   Society  @relation(fields: [societyId], references: [id])
+  tenantId  Int?     @unique
+  tenant    User?    @relation("tenant-relation", fields: [tenantId], references: [id])
+  members   User[]   @relation("member-relation")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Guest {
+  id          Int         @id @default(autoincrement())
+  name        String
+  phone       String
+  apartmentId Int
+  apartment   Apartment   @relation(fields: [apartmentId], references: [id])
+  date        DateTime
+  timeIn      DateTime
+  timeOut     DateTime
+  vehicleType VehicleType @default(Car)
+  vehicleNo   String
+}
+
+enum VehicleType {
+  Car
+  Truck
+  Bike
+  Van
+  Bus
+  Tractor
+  Trailer
+  Other
+}
+
+enum UserRoles {
+  Admin
+  User
+  Security
+  Manager
+  Staff
+  SuperAdmin
+  Guest
+  Tenant
+}
