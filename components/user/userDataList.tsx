@@ -109,7 +109,7 @@ export default function UserDataList() {
     { value: "SuperAdmin", label: "SuperAdmin" },
     { value: "Admin", label: "Admin" },
     { value: "Manager", label: "Manager" },
-    { value: "ApartmentOwner", label: "ApartmentOwner" },
+    { value: "Department", label: "Department" },
     { value: "User", label: "User" },
     { value: "ApartmentTenant", label: "ApartmentTenant" },
     { value: "Security", label: "Security" },

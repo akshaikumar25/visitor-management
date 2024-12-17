@@ -1,9 +1,17 @@
 import { CustomErrorDetails } from "@/types";
-import { BuildingIcon, CarIcon, Inspect, LineChartIcon, PackageIcon, TruckIcon, UserIcon, UsersIcon } from "lucide-react";
+import {
+  BuildingIcon,
+  CarIcon,
+  Inspect,
+  LineChartIcon,
+  PackageIcon,
+  TruckIcon,
+  UserIcon,
+  UsersIcon,
+} from "lucide-react";
 import { signOut } from "next-auth/react";
 import { MdCleanHands } from "react-icons/md";
 import { TbHome, TbLogout, TbReload } from "react-icons/tb";
-
 
 export const DEFAULT_LOGIN_REDIRECT = "/";
 
@@ -43,7 +51,7 @@ export const Items = [
     isBottom: false,
   },
   {
-    href: "/apartment",
+    href: "/department",
     icon: BuildingIcon, // Icon representing a building or apartment
     label: "Apartment",
     isActive: true,
@@ -85,7 +93,7 @@ export const Items = [
 ];
 
 export const customErrorDetails: CustomErrorDetails = {
-  "NO_INTERNET_CONNECTION": {
+  NO_INTERNET_CONNECTION: {
     title: "No Internet Connection",
     description: "Please check your internet connection and try again.",
     image: null,
@@ -98,20 +106,21 @@ export const customErrorDetails: CustomErrorDetails = {
           window.location.reload();
         },
         redirectLink: null,
-      }
-    ]
-  }, 
-  "USER_NOT_FOUND": {
+      },
+    ],
+  },
+  USER_NOT_FOUND: {
     title: "User Not Found",
-    description: "We couldn't find the user account you're looking for. This may be because the account has been deleted, the user ID is incorrect, or your session has expired.",
+    description:
+      "We couldn't find the user account you're looking for. This may be because the account has been deleted, the user ID is incorrect, or your session has expired.",
     image: null,
     lottie: null,
     redirectButton: [
       {
         label: "Go to Home",
         icon: TbHome,
-        action: ()=>{},
-        redirectLink: "/"
+        action: () => {},
+        redirectLink: "/",
       },
       {
         label: "Try Again",
@@ -119,7 +128,7 @@ export const customErrorDetails: CustomErrorDetails = {
         action: () => {
           window.location.reload();
         },
-        redirectLink: null
+        redirectLink: null,
       },
       {
         label: "Sign Out",
@@ -127,45 +136,45 @@ export const customErrorDetails: CustomErrorDetails = {
         action: () => {
           signOut();
         },
-        redirectLink: null
-      }
-    ]
+        redirectLink: null,
+      },
+    ],
   },
-  "ACCESS_DENIED": {
+  ACCESS_DENIED: {
     title: "Access Denied",
     description: "You don't have permission to access this resource.",
     image: null,
     lottie: null,
     redirectButton: [
-     
       {
         label: "Login With Another Account",
         icon: TbLogout,
         action: () => {
           signOut({ callbackUrl: "/auth/login" });
         },
-        redirectLink: null
-      }
-    ]
+        redirectLink: null,
+      },
+    ],
   },
-  "PAGE_NOT_FOUND": {
+  PAGE_NOT_FOUND: {
     title: "Page Not Found",
-    description: "The page you're looking for doesn't exist or has been removed.",
+    description:
+      "The page you're looking for doesn't exist or has been removed.",
     image: null,
     lottie: null,
     redirectButton: [
       {
         label: "Go to Home",
         icon: TbHome,
-        action: () => {
-        },
-        redirectLink: "/dashboard"
-      }
-    ]
+        action: () => {},
+        redirectLink: "/dashboard",
+      },
+    ],
   },
-  "ERROR": {
+  ERROR: {
     title: "Error",
-    description: "An error occurred while processing your request. Please try again later.",
+    description:
+      "An error occurred while processing your request. Please try again later.",
     image: null,
     lottie: null,
     redirectButton: [
@@ -175,7 +184,7 @@ export const customErrorDetails: CustomErrorDetails = {
         action: () => {
           window.location.reload();
         },
-        redirectLink: null
+        redirectLink: null,
       },
       {
         label: "Relogin",
@@ -183,33 +192,31 @@ export const customErrorDetails: CustomErrorDetails = {
         action: () => {
           signOut({ callbackUrl: "/auth/login" });
         },
-        redirectLink: null
+        redirectLink: null,
       },
       {
         label: "Go to Home",
         icon: TbHome,
         action: () => {},
-        redirectLink: "/dashboard"
-      }
-    ]
+        redirectLink: "/dashboard",
+      },
+    ],
   },
-  "SHOP_NOT_FOUND": {
+  SHOP_NOT_FOUND: {
     title: "Society Not Found",
-    description: "The society you're looking for doesn't exist or has been removed.",
+    description:
+      "The society you're looking for doesn't exist or has been removed.",
     image: null,
     lottie: null,
     redirectButton: [
-      
       {
         label: "Sign Out and Login Again",
         icon: TbLogout,
         action: () => {
           signOut({ callbackUrl: "/auth/login" });
         },
-        redirectLink: null
-      }
-    ]
+        redirectLink: null,
+      },
+    ],
   },
-  
-}
-
+};

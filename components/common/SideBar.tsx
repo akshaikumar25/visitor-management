@@ -86,7 +86,7 @@ const getNavigationItems = (role: string): NavItem[] => {
   ];
 
   const baseItemsAfterSociety: NavItem[] = [
-    { title: "Department/Office", url: "/apartment", icon: Building2 },
+    { title: "Department/Office", url: "/department", icon: Building2 },
     { title: "Visitor Management", url: "/visitor", icon: UserCheck },
   ];
 
