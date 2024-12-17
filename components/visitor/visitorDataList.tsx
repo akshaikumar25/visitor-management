@@ -66,7 +66,7 @@ export default function VisitorManagement() {
           loginUser.currentSocietyId
         ) {
           await fetchApartmentsBySociety(loginUser.currentSocietyId);
-        } else if (loginUser.role === "ApartmentOwner" && loginUser.apartment) {
+        } else if (loginUser.role === "Department" && loginUser.apartment) {
           setSocietyApartments(loginUser.apartment);
         }
       }
@@ -88,7 +88,7 @@ export default function VisitorManagement() {
         const apartmentsToUse =
           loginUser?.role === "SuperAdmin"
             ? apartments
-            : loginUser?.role === "ApartmentOwner"
+            : loginUser?.role === "Department"
             ? loginUser.apartment
             : loginUser?.role === "Security"
             ? societyApartments
@@ -132,22 +132,22 @@ export default function VisitorManagement() {
       className: "font-small",
       render: (_, visitor) => {
         let statusText;
-        let bgColor;
+        let textColor;
 
         if (visitor?.approvalstatus === "Approved") {
           statusText = "Approved";
-          bgColor = "bg-green-500";
+          textColor = "text-green-500";
         } else if (visitor?.approvalstatus === "Denied") {
           statusText = "Denied";
-          bgColor = "bg-red-500";
+          textColor = "text-red-600";
         } else {
           statusText = "Pending";
-          bgColor = "bg-yellow-500";
+          textColor = "text-yellow-500";
         }
 
         return (
           <span
-            className={`inline-block px-3 py-1 rounded-md text-white ${bgColor} text-xs`}
+            className={`inline-block px-3 py-1 rounded-md ${textColor} text-xs`}
           >
             {statusText}
           </span>
@@ -157,42 +157,42 @@ export default function VisitorManagement() {
     {
       header: "Visitor Status",
       accessor: "visitorstatus",
-      className: "font-small", // You can still use this if you define it in your CSS.
+      className: "font-small",
       render: (_, visitor) => {
         let statusText = "";
-        let statusClass = "";
+        let textColorClass = "";
+
         switch (visitor.visitorstatus) {
           case "Arrived":
             statusText = "Arrived";
-            statusClass = "bg-blue-500 text-white";
+            textColorClass = "text-blue-900";
             break;
           case "Departed":
             statusText = "Departed";
-            statusClass = "bg-yellow-500 text-white";
+            textColorClass = "text-yellow-500";
             break;
           case "Scheduled":
             statusText = "Scheduled";
-            statusClass = "bg-gray-500 text-white";
+            textColorClass = "text-gray-500";
             break;
           case "Canceled":
             statusText = "Canceled";
-            statusClass = "bg-red-500 text-white";
+            textColorClass = "text-red-600";
             break;
           default:
             statusText = "Unknown";
-            statusClass = "bg-gray-400 text-white";
+            textColorClass = "text-gray-400";
         }
 
         return (
           <span
-            className={`inline-block px-3 py-1 rounded-md ${statusClass} text-xs`}
+            className={`inline-block px-3 py-1 rounded-md ${textColorClass} text-xs`}
           >
             {statusText}
           </span>
         );
       },
     },
-
     {
       header: "Actions",
       accessor: "id",

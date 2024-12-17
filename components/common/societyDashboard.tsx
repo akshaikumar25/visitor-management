@@ -20,7 +20,7 @@ interface SocietyMember {
 interface Apartment {
   id: string;
   name: string;
-  ApartmentOwner?: string;
+  Department?: string;
   type: "apartment";
 }
 
@@ -115,7 +115,7 @@ const SocietyDashboard = () => {
                 <span className="text-xs font-medium truncate">
                   {item.type === "member"
                     ? item.phone
-                    : item.ApartmentOwner || "N/A"}
+                    : item.Department || "N/A"}
                 </span>
               </motion.div>
             )}

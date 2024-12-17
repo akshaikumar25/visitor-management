@@ -43,10 +43,10 @@ export default function Apartment() {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["availableApartmentOwner"],
+    queryKey: ["availableDepartment"],
     queryFn: async () => {
       const data = await userfilter({
-        role: "ApartmentOwner",
+        role: "Department",
         currentSocietyId: loginUsers?.currentSocietyId,
         apartment: {
           none: {},

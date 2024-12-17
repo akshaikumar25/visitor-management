@@ -98,7 +98,7 @@ export default function VisitorForm({
             <span className="text-xs"> Vehicle </span>
           </TabsTrigger>
 
-          {(loginUser?.role === "ApartmentOwner" ||
+          {(loginUser?.role === "Department" ||
             loginUser?.role === "Security") &&
             mode === "edit" && (
               <TabsTrigger value="status">
@@ -440,7 +440,7 @@ export default function VisitorForm({
 
         {/* Security Details Tab */}
         <TabsContent value="status" className="space-y-4">
-          {loginUser?.role === "ApartmentOwner" && mode === "edit" && (
+          {loginUser?.role === "Department" && mode === "edit" && (
             <div className="space-y-2">
               <Label>Approval</Label>
               <Controller

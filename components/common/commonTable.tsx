@@ -165,7 +165,7 @@ export function DataTable<T extends { id?: number | string }>({
                     {columns.map((column) => (
                       <TableCell
                         key={column.accessor as string}
-                        className={`py-2.5 text-xs sm:text-sm text-gray-700 ${
+                        className={`py-2 text-xs sm:text-sm text-gray-700 ${
                           column.className || ""
                         }`}
                         style={{ width: column.width }}

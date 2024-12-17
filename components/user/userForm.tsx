@@ -235,7 +235,7 @@ export default function UserDialog({
 
             {(role === "User" || role === "ApartmentTenant") && (
               <div className="space-y-2">
-                <Label htmlFor="apartmentId">Apartment No</Label>
+                <Label htmlFor="apartmentId">Department No</Label>
                 <Select
                   onValueChange={(value: string) => {
                     form.setValue("apartmentId", value);
@@ -244,7 +244,7 @@ export default function UserDialog({
                   value={apartment}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Apartment" />
+                    <SelectValue placeholder="Select Department" />
                   </SelectTrigger>
                   <SelectContent>
                     {apartments.map((apartment) => (
