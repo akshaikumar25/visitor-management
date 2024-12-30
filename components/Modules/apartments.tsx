@@ -48,9 +48,7 @@ export default function Apartment() {
       const data = await userfilter({
         role: "Department",
         currentSocietyId: loginUsers?.currentSocietyId,
-        apartment: {
-          none: {},
-        },
+        apartment: {},
       });
       return data.data as User[];
     },
@@ -111,16 +109,16 @@ export default function Apartment() {
           : loginUsers?.currentSocietyId?.toString(),
     },
     {
-      name: "ownerId",
-      label: "Owner Name*",
+      name: "userId",
+      label: "User Name*",
       type: "select",
-      placeholder: "Select Owner",
+      placeholder: "Select User",
       options:
         AdminUsers?.map((user) => ({
           value: user.id,
           label: user.name,
         })) || [],
-      validation: z.string().min(1, { message: "Owner is required" }),
+      validation: z.string().min(1, { message: "User is required" }),
       gridCols: 1,
     },
   ];
@@ -136,8 +134,8 @@ export default function Apartment() {
       accessor: "society",
     },
     {
-      header: "Owner",
-      accessor: "owner",
+      header: "User",
+      accessor: "users",
     },
   ];
 
@@ -225,6 +223,7 @@ export default function Apartment() {
       const resultAction = await dispatch(createApartment(apartment));
       if (createApartment.fulfilled.match(resultAction)) {
         toast.success("Department added successfully");
+        fetchApartment(currentPage, searchTerm);
       } else {
         throw new Error("Failed to create Department");
       }
@@ -241,6 +240,7 @@ export default function Apartment() {
           data: updatedApartment,
         })
       );
+      fetchApartment(currentPage, searchTerm);
       toast.success("Department updated successfully");
     } catch (error) {
       toast.error("Failed to update Department");
@@ -251,7 +251,12 @@ export default function Apartment() {
     try {
       const apartmentId = typeof id === "number" ? String(id) : id;
       const resultAction = await dispatch(deleteApartmentById(apartmentId));
-      toast.success("Department deleted successfully");
+      if (apartment && apartment.length === 1 && currentPage > 1) {
+        toast.success("Department deleted successfully");
+        setCurrentPage((prev) => prev - 1);
+      } else {
+        fetchApartment(currentPage, searchTerm);
+      }
     } catch (error) {
       toast.error("Failed to delete Department");
     }

@@ -209,7 +209,7 @@ export default function AppSidebar({ children }: AppSidebarProps) {
           </SidebarMenu>
         </SidebarHeader>
 
-        {loginUsers?.role !== "SuperAdmin" && (
+        {loginUsers?.role !== "SuperAdmin" && loginUsers?.role !== "Admin" && (
           <div className="space-y-4 bg-white px-5 py-3">
             <p className="text-blue-900 text-md p-2 rounded-sm border border-blue-200">
               Society : {societyName}

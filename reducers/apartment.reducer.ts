@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import * as ApartmentService from "@/services/apartmentService";
 import { ApartmentInfo, Pagination, GetQueryParams } from "@/types";
 
-
 export interface apartments {
   data: ApartmentInfo[] | null;
   status: "idle" | "loading" | "succeeded" | "failed";
@@ -31,8 +30,8 @@ export const fetchAllApartment = createAsyncThunk(
       data: response.data.map((apartment: ApartmentInfo) => ({
         id: apartment.id,
         name: apartment.name,
-        owner: apartment.owner?.name || "N/A",
-        ownerId: apartment.owner?.id || "N/A",
+        users: apartment.owner?.name || "N/A",
+        userId: apartment.owner?.id || "N/A",
         society: apartment.society?.name || "N/A",
         societyId: apartment.society?.id || "N/A",
       })),
@@ -40,8 +39,8 @@ export const fetchAllApartment = createAsyncThunk(
         total: response.pagination.total,
         page: response.pagination.page,
         limit: response.pagination.limit,
-        totalPages: response.pagination.totalPages
-      }
+        totalPages: response.pagination.totalPages,
+      },
     };
   }
 );
@@ -53,7 +52,7 @@ export const createApartment = createAsyncThunk(
     try {
       const dataToSend = {
         ...apartmentData,
-        ownerId: Number(apartmentData.ownerId),
+        userId: Number(apartmentData.userId),
         societyId: Number(apartmentData.societyId),
       };
       const response = await ApartmentService.createApartment(dataToSend);
@@ -71,10 +70,10 @@ export const updateApartmentById = createAsyncThunk(
   "apartment/updateApartmentById",
   async ({ id, data }: { id: string; data: ApartmentInfo }, thunkAPI) => {
     try {
-      const { owner, society, ...restData } = data;
+      const { users, society, ...restData } = data;
       const dataToSend = {
         ...restData,
-        ownerId: Number(data.ownerId),
+        userId: Number(data.userId),
         societyId: Number(data.societyId),
       };
       const response = await ApartmentService.updateApartment(id, dataToSend);
@@ -109,15 +108,15 @@ const apartmentSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllApartment.pending, (state) => {
-        state.status = 'loading';
+        state.status = "loading";
       })
       .addCase(fetchAllApartment.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = "succeeded";
         state.data = action.payload.data;
         state.pagination = action.payload.pagination;
       })
       .addCase(fetchAllApartment.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = "failed";
         state.error = action.error.message || null;
       })
 

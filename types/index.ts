@@ -30,7 +30,6 @@ export interface User {
   societyId?: number;
   apartment?: ApartmentInfo[];
   administrativeSocity?: Society[];
-  managedSocieties?: Society[];
   currentSociety?: Society[];
   Society?: Society[];
   apartmentId?: number | null;
@@ -39,11 +38,9 @@ export interface User {
 export interface ApartmentInfo {
   id?: number;
   name: string;
-  ownerId?: number;
+  userId?: number;
   owner?: User;
-  tenantId?: number;
-  tenant?: User;
-  members: User[];
+  users?: User;
   Visitor: VisitorInfo[];
   societyId?: number;
   society?: Society;
@@ -58,7 +55,6 @@ export interface Society {
   zip: string;
   phone: string;
   adminNames?: User[];
-  managers?: User[];
   Apartment?: ApartmentInfo[];
   User?: User[];
   email?: string | null;
