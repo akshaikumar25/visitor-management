@@ -111,7 +111,7 @@ export default function UserDataList() {
     { value: "Manager", label: "Manager" },
     { value: "Department", label: "Department" },
     { value: "User", label: "User" },
-    { value: "ApartmentTenant", label: "ApartmentTenant" },
+    { value: "ApartmentTenant", label: "Tenant" },
     { value: "Security", label: "Security" },
     { value: "Staff", label: "Staff" },
   ];

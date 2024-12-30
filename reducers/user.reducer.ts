@@ -49,7 +49,7 @@ export const loginWithCredentials = createAsyncThunk(
       const response = signIn("credentials", {
         phone,
         otp,
-        redirect: true,
+        redirect: false,
       });
       return response;
     } catch (error: any) {

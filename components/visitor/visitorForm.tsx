@@ -330,7 +330,6 @@ export default function VisitorForm({
                 required: "To date is required",
                 validate: (todate: any) => {
                   if (fromdate && todate < fromdate) {
-                    console.log(todate);
                     return "To date must be equal to or later than from date";
                   }
                   return true;

@@ -42,25 +42,43 @@ const LoginPage = () => {
     }
   };
 
+  // const handleotpSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const otpString = otp.join("");
+  //   setIsVerifying(true);
+  //   try {
+  //     const result = await dispatch(
+  //       loginWithCredentials({ phone: phoneNumber, otp: otpString })
+  //     ).unwrap();
+  //     if (loginWithCredentials.fulfilled.match(result)) {
+  //       toast.success("Login successfully");
+  //     } else {
+  //       toast.error("Failed to verify OTP or login");
+  //     }
+  //   } catch (error) {
+  //     toast.error("Failed to verify OTP or login");
+  //   }
+  // };
+
   const handleotpSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
     const otpString = otp.join("");
     setIsVerifying(true);
     try {
       const result = await dispatch(
         loginWithCredentials({ phone: phoneNumber, otp: otpString })
       ).unwrap();
-      if (loginWithCredentials.fulfilled.match(result)) {
+      if (result) {
         toast.success("Login successfully");
+        router.push("/dashboard");
       } else {
         toast.error("Failed to verify OTP or login");
       }
     } catch (error) {
-      toast.success("Login successfully");
-      // toast.error("Failed to verify OTP or login");
+      toast.error("Failed to verify OTP or login");
+    } finally {
+      setIsLoading(false);
     }
   };
-
   const handleOtpChange = (index: number, value: string) => {
     if (value.length <= 1) {
       const newOtp = [...otp];

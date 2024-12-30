@@ -24,6 +24,7 @@ export default function VisitorManagement() {
   const loginUser: User | null = useSelector(
     (state: RootState) => state.user.user
   );
+
   const {
     data: visitor,
     status,
@@ -62,7 +63,9 @@ export default function VisitorManagement() {
         if (loginUser.role === "SuperAdmin") {
           dispatch(fetchAllApartment({}));
         } else if (
-          ["Admin", "Manager", "Security"].includes(loginUser.role) &&
+          ["Admin", "Manager", "Security", "Department"].includes(
+            loginUser.role
+          ) &&
           loginUser.currentSocietyId
         ) {
           await fetchApartmentsBySociety(loginUser.currentSocietyId);

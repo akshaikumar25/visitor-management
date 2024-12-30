@@ -126,12 +126,9 @@ const SocietyDashboard = () => {
     if (selectedSociety?.Apartment) {
       selectedSociety.Apartment.forEach((apartment) => {
         // Start with the existing members count
-        let memberCount = apartment.members.length;
-
-        // Add 1 to the count if the tenant is not null
-        if (apartment.tenant) {
-          memberCount += 1;
-        }
+        let memberCount = apartment?.users
+          ? Object.keys(apartment.users).length
+          : 0;
 
         apartmentData.push({
           apartment: apartment.name,
