@@ -160,24 +160,6 @@ const SocietyDashboard = () => {
           <Card className="border border-[#374151] hover:border-yellow-500 transition-colors duration-200">
             <CardHeader className="py-3 px-4">
               <CardTitle className="text-base font-bold flex items-center">
-                <User2Icon className="mr-2" size={16} />
-                Managers
-                <span className="text-sm font-medium ml-2 text-gray-600">
-                  ({selectedSociety.managers?.length || 0})
-                </span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-3">
-              <ItemList
-                items={mapMembersToType(selectedSociety.managers, "member")}
-                icon={<User2Icon size={16} />}
-              />
-            </CardContent>
-          </Card>
-
-          <Card className="border border-[#374151] hover:border-yellow-500 transition-colors duration-200">
-            <CardHeader className="py-3 px-4">
-              <CardTitle className="text-base font-bold flex items-center">
                 <Home className="mr-2" size={16} />
                 Apartments
                 <span className="text-sm font-medium ml-2 text-gray-600">
