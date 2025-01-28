@@ -109,7 +109,7 @@ export default function VisitorManagement() {
           loginUser?.role === "SuperAdmin"
             ? apartments
             : loginUser?.role === "Department"
-            ? loginUser.apartment
+            ? loginUser?.Apartments
             : loginUser?.role === "Security"
             ? societyApartments
             : societyApartments;

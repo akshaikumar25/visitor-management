@@ -29,6 +29,7 @@ export interface User {
   currentSocietyId?: number;
   societyId?: number;
   apartment?: ApartmentInfo[];
+  Apartments?: ApartmentInfo[];
   administrativeSocity?: Society[];
   currentSociety?: Society[];
   Society?: Society[];
