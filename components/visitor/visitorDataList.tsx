@@ -19,6 +19,17 @@ import { getAllSocietiesById } from "@/services/societyService";
 import VisitorDialoge from "./visitorDialog";
 import { Button } from "../ui/button";
 
+interface ApartmentData {
+  data: any[];
+}
+
+interface FetchAllApartmentResponse {
+  meta: {
+    requestStatus: string;
+  };
+  payload: ApartmentData;
+}
+
 export default function VisitorManagement() {
   const dispatch = useDispatch<AppDispatch>();
   const loginUser: User | null = useSelector(
@@ -61,7 +72,13 @@ export default function VisitorManagement() {
     const fetchApartments = async () => {
       if (loginUser) {
         if (loginUser.role === "SuperAdmin") {
-          dispatch(fetchAllApartment({}));
+          const response = (await dispatch(
+            fetchAllApartment({})
+          )) as FetchAllApartmentResponse;
+          if (response?.meta?.requestStatus === "fulfilled") {
+            const apartmentsData = response.payload.data;
+            setSocietyApartments(apartmentsData);
+          }
         } else if (
           ["Admin", "Manager", "Security", "Department"].includes(
             loginUser.role
@@ -136,21 +153,25 @@ export default function VisitorManagement() {
       render: (_, visitor) => {
         let statusText;
         let textColor;
+        let bgColor;
 
         if (visitor?.approvalstatus === "Approved") {
           statusText = "Approved";
           textColor = "text-green-500";
+          bgColor = "bg-green-100"; // Light green background
         } else if (visitor?.approvalstatus === "Denied") {
           statusText = "Denied";
           textColor = "text-red-600";
+          bgColor = "bg-red-100"; // Light red background
         } else {
           statusText = "Pending";
           textColor = "text-yellow-500";
+          bgColor = "bg-yellow-100"; // Light yellow background
         }
 
         return (
           <span
-            className={`inline-block px-3 py-1 rounded-md ${textColor} text-xs`}
+            className={`inline-block px-3 py-1 rounded-md ${textColor} ${bgColor} text-xs`}
           >
             {statusText}
           </span>
@@ -164,32 +185,38 @@ export default function VisitorManagement() {
       render: (_, visitor) => {
         let statusText = "";
         let textColorClass = "";
+        let bgColorClass = "";
 
         switch (visitor.visitorstatus) {
           case "Arrived":
             statusText = "Arrived";
             textColorClass = "text-blue-900";
+            bgColorClass = "bg-blue-100";
             break;
           case "Departed":
             statusText = "Departed";
-            textColorClass = "text-yellow-500";
+            textColorClass = "text-yellow-700";
+            bgColorClass = "bg-yellow-100";
             break;
           case "Scheduled":
             statusText = "Scheduled";
-            textColorClass = "text-gray-500";
+            textColorClass = "text-gray-700";
+            bgColorClass = "bg-gray-100";
             break;
           case "Canceled":
             statusText = "Canceled";
-            textColorClass = "text-red-600";
+            textColorClass = "text-red-700";
+            bgColorClass = "bg-red-100";
             break;
           default:
             statusText = "Unknown";
-            textColorClass = "text-gray-400";
+            textColorClass = "text-gray-600";
+            bgColorClass = "bg-gray-50";
         }
 
         return (
           <span
-            className={`inline-block px-3 py-1 rounded-md ${textColorClass} text-xs`}
+            className={`inline-block px-3 py-1 rounded-md ${textColorClass} ${bgColorClass} text-xs font-medium`}
           >
             {statusText}
           </span>

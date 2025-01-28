@@ -99,6 +99,8 @@ export default function VisitorForm({
           </TabsTrigger>
 
           {(loginUser?.role === "Department" ||
+            loginUser?.role === "SuperAdmin" ||
+            loginUser?.role === "Admin" ||
             loginUser?.role === "Security") &&
             mode === "edit" && (
               <TabsTrigger value="status">
@@ -381,65 +383,63 @@ export default function VisitorForm({
               </p>
             )}
           </div>
-          {travelMode === "Vehicle" ||
-            (initialData?.travelmode == "Vehicle" && (
-              <div className="">
-                <div className="space-y-2">
-                  <Label>Vehicle Type</Label>
-                  <Controller
-                    name="vehicleType"
-                    control={control}
-                    rules={{ required: "Vehicle type is required" }}
-                    render={({ field }) => (
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Vehicle Type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {["Car", "Truck", "Bike", "Van", "Bus", "Other"].map(
-                            (type) => (
-                              <SelectItem key={type} value={type}>
-                                {type}
-                              </SelectItem>
-                            )
-                          )}
-                        </SelectContent>
-                      </Select>
-                    )}
-                  />
-                  {errors.vehicleType && (
-                    <p className="text-sm text-red-600 flex items-center">
-                      <AlertTriangle className="mr-2 h-4 w-4" />
-                      {errors.vehicleType.message}
-                    </p>
+
+          {(travelMode === "Vehicle" ||
+            initialData?.travelmode === "Vehicle") && (
+            <div className="">
+              <div className="space-y-2">
+                <Label>Vehicle Type</Label>
+                <Controller
+                  name="vehicleType"
+                  control={control}
+                  rules={{ required: "Vehicle type is required" }}
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Vehicle Type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {["Car", "Truck", "Bike", "Van", "Bus", "Other"].map(
+                          (type) => (
+                            <SelectItem key={type} value={type}>
+                              {type}
+                            </SelectItem>
+                          )
+                        )}
+                      </SelectContent>
+                    </Select>
                   )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="vehicleNo">Vehicle Number</Label>
-                  <Input
-                    id="vehicleNo"
-                    placeholder="Enter vehicle number"
-                    {...register("vehicleNo", {
-                      required: "Vehicle number is required",
-                    })}
-                  />
-                  {errors.vehicleNo && (
-                    <p className="text-sm text-red-600 flex items-center">
-                      <AlertTriangle className="mr-2 h-4 w-4" />
-                      {errors.vehicleNo.message}
-                    </p>
-                  )}
-                </div>
+                />
+                {errors.vehicleType && (
+                  <p className="text-sm text-red-600 flex items-center">
+                    <AlertTriangle className="mr-2 h-4 w-4" />
+                    {errors.vehicleType.message}
+                  </p>
+                )}
               </div>
-            ))}
+              <div className="space-y-2">
+                <Label htmlFor="vehicleNo">Vehicle Number</Label>
+                <Input
+                  id="vehicleNo"
+                  placeholder="Enter vehicle number"
+                  {...register("vehicleNo", {
+                    required: "Vehicle number is required",
+                  })}
+                />
+                {errors.vehicleNo && (
+                  <p className="text-sm text-red-600 flex items-center">
+                    <AlertTriangle className="mr-2 h-4 w-4" />
+                    {errors.vehicleNo.message}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
         </TabsContent>
 
         {/* Security Details Tab */}
         <TabsContent value="status" className="space-y-4">
-          {loginUser?.role === "Department" && mode === "edit" && (
+          {mode === "edit" && (
             <div className="space-y-2">
               <Label>Approval</Label>
               <Controller
